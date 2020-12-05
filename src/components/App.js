@@ -3,11 +3,27 @@ import "../styles/App.css";
 
 const App = () => {
 	const [timer, setTimer] = useState(0);
+	const [running, setRunning] = useState(false);
+
+	let count;
+	const timerHandler = () => {
+		count = setTimeout(() => {
+			setTimer(timer - 1);
+		}, 1 * 1000);
+		setRunning(true);
+		if (timer == 0) {
+			clearTimeout(count);
+			setRunning(false);
+		}
+	};
 
 	const countdown = (event) => {
 		if (event.keyCode == 13) {
 			const inputValue = document.getElementById("timeCount").value;
 			if (!isNaN(inputValue)) {
+				if (running) {
+					clearTimeout(count);
+				}
 				setTimer(Math.floor(inputValue));
 			} else {
 				setTimer(0);
@@ -19,14 +35,6 @@ const App = () => {
 		timerHandler();
 	}, [timer]);
 
-	const timerHandler = () => {
-		let count = setTimeout(() => {
-			setTimer(timer - 1);
-		}, 1 * 1000);
-		if (timer == 0) {
-			clearTimeout(count);
-		}
-	};
 	return (
 		<div className="wrapper">
 			<div id="whole-center">
