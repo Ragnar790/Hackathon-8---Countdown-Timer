@@ -26,6 +26,7 @@ const App = () => {
 				}
 				setTimer(Math.floor(inputValue));
 			} else {
+				clearTimeout(count);
 				setTimer(0);
 			}
 		}
